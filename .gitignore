@@ -102,3 +102,49 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/react,java,linux
+
+
+
+# --- WatchWithMe Global Gitignore ---
+
+### Backend (Spring Boot) ###
+backend/HELP.md
+backend/target/
+backend/build/
+backend/bin/
+backend/out/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/.settings/
+backend/.classpath
+backend/.project
+backend/.factorypath
+backend/.springBeans
+backend/.sts4-cache
+
+### Frontend (React/Node) ###
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/.env
+frontend/.env.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+### IDE & OS (General) ###
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+Thumbs.db
+*.log
+
+### Database & Secrets ###
+*.db
+*.h2.db
+.env
