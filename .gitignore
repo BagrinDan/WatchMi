@@ -6,6 +6,8 @@
 .vscode/
 *.swp
 
+backend/src/main/resources/application.properties
+
 # --- Java Build Artifacts (Maven/Gradle) ---
 target/
 build/
