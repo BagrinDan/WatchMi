@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+# --- Database ---
+  db:
+    image: postgres:15-alpine
+    container_name: watchwithme-db
+    restart: always
+    environment:
+      POSTGRES_DB: watchwithme
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+# --- Back ----
+  backend:
+    build: ./backend
+    container_name: watchwithme-backend
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/watchwithme
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+
+# --- frontend ---
+  frontend:
+    build: ./frontend
+    container_name: watchwithme-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    stdin_open: true # Нужно для корректной работы React в Docker
+    depends_on:
+      - backend
+
+# --- Ollama model ---
+
+volumes:
+  db-data:

@@ -1,0 +1,220 @@
+/* register.css */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  background-color: #121212;
+  color: #fff;
+}
+
+/* Контейнер страницы регистрации */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #121212 0%, #1a1a2e 100%);
+  padding: 20px;
+}
+
+/* Карточка регистрации */
+.register-card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+}
+
+/* Заголовок */
+.register-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.register-header h1 {
+  color: #19a37f;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.register-header p {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Форма */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Группы полей ввода */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #ddd;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 12px 15px;
+  background-color: #121212;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #19a37f;
+  box-shadow: 0 0 0 2px rgba(25, 163, 127, 0.2);
+}
+
+.form-input::placeholder {
+  color: #666;
+}
+
+/* Кнопка регистрации */
+.register-button {
+  background-color: #19a37f;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.register-button:hover {
+  background-color: #14866c;
+  transform: translateY(-2px);
+}
+
+.register-button:active {
+  transform: translateY(0);
+}
+
+.register-button:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Ссылка на вход */
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #333;
+}
+
+.login-link {
+  color: #19a37f;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #2bc4a0;
+  text-decoration: underline;
+}
+
+/* Сообщения об ошибках/успехе */
+.register-message {
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.register-message.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #f8d7da;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.register-message.success {
+  background-color: rgba(25, 163, 127, 0.1);
+  color: #d4edda;
+  border: 1px solid rgba(25, 163, 127, 0.3);
+}
+
+/* Дополнительные опции */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.remember-me input[type="checkbox"] {
+  accent-color: #19a37f;
+}
+
+/* Анимация загрузки */
+.register-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .register-card {
+    padding: 30px 20px;
+  }
+  
+  .register-header h1 {
+    font-size: 1.7rem;
+  }
+  
+  .form-options {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+/* Эффект для полей с ошибкой */
+.form-input.error {
+  border-color: #dc3545;
+}
+
+.form-input.error:focus {
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+}

@@ -1,0 +1,66 @@
+/* Header */
+.chat-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 15px; 
+  background-color: #1e1e1e; 
+  border-bottom: 1px solid #333; 
+}
+
+/* Кнопки авторизации в Header */
+.auth-buttons button { 
+  margin-left: 5px; 
+  padding: 6px 12px; 
+  border: none; 
+  background: #19a37f; 
+  color: #fff; 
+  border-radius: 6px; 
+  cursor: pointer; 
+}
+
+.auth-buttons button:hover { 
+  opacity: 0.85; 
+}
+
+/* Контейнер для profile + меню */
+.auth-buttons {
+  position: relative;
+}
+
+.profile-wrapper {
+  position: relative;
+}
+
+/* Меню профиля (дропдаун) */
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 8px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  z-index: 9999;
+}
+
+/* Стили кнопок внутри меню профиля */
+.profile-menu button {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.profile-menu button:hover {
+  background: #333;
+}
