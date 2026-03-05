@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                                                 "/api/auth/login",
                                                 "/api/login",
                                                 "/api/auth/register",
-                                                
+
                                                 "/api/model/answer",
 
                                                 "/swagger-ui",
