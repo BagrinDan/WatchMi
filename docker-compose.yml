@@ -1,47 +1,58 @@
-version: '3.8'
-
 services:
-# --- Database ---
+  # --- Database ---
   db:
-    image: postgres:15-alpine
+    image: mariadb:12
     container_name: watchwithme-db
     restart: always
     environment:
-      POSTGRES_DB: watchwithme
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: root   # обязательно для инициализации
     ports:
-      - "5432:5432"
+      - "3307:3306"  # порт на хосте, чтобы не конфликтовал с локальной БД
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/mysql
 
-# --- Back ----
+  # --- Back ----
   backend:
     build: ./backend
     container_name: watchwithme-backend
     restart: on-failure
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/watchwithme
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/${MARIADB_DATABASE}
+      - SPRING_DATASOURCE_USERNAME=${MARIADB_USER}  
+      - SPRING_DATASOURCE_PASSWORD=${MARIADB_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
     depends_on:
       - db
+      - ollama
 
-# --- frontend ---
+  # --- frontend ---
   frontend:
     build: ./frontend
     container_name: watchwithme-frontend
     restart: always
     ports:
-      - "3000:3000"
-    stdin_open: true # Нужно для корректной работы React в Docker
+      - "5173:80"
+    stdin_open: true
     depends_on:
       - backend
 
-# --- Ollama model ---
+  # --- Ollama model ---
+  ollama: 
+    image: ollama/ollama 
+    container_name: watchwithme-ollama 
+    restart: always 
+    ports: 
+      - "11435:11434" 
+    volumes: 
+      - ollama-data:/root/.ollama
 
 volumes:
   db-data:
+  ollama-data:

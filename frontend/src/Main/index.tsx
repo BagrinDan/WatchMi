@@ -66,7 +66,7 @@ function Home() {
     try {
       // 3. Дергаем Spring Boot эндпоинт
 
-      const response = await fetch(`http://localhost:8080/api/model/answer?message=${encodeURIComponent(trimmedInput)}`);
+      const response = await fetch(`/api/model/answer?message=${encodeURIComponent(trimmedInput)}`);
       
       if (!response.ok) throw new Error("Ошибка связи с сервером");
       
