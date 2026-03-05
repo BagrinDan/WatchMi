@@ -1,5 +1,6 @@
 package com.example.Calendar.security;
 
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,6 +69,7 @@ public class TokenFilter extends OncePerRequestFilter {
     }
 }
 
+// Deprecated. Will be deleted soon
 //String jwt = null;
 //String username = null;
 //UserDetails userDetails;

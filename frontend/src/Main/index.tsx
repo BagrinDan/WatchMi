@@ -15,8 +15,8 @@ function Home() {
   const [newMovie, setNewMovie] = useState("");
   const [messages, setMessages] = useState<{ text: string; isBot: boolean }[]>([  ]);
   const [userInput, setUserInput] = useState("");
-
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,15 +27,17 @@ function Home() {
     console.log(token)
   }, []);
 
+
   const handleLogout = () => {
-    localStorage.removeItem("token"); // -- TODO: Поменять в HttpOnly
+    localStorage.removeItem("token"); // -- TODO: Поменять на HttpOnly
     setIsAuthenticated(false);
     navigate("/login")
   }
 
+
   const handleAddMovie = () => {
     if (!newMovie.trim()) {
-      alert("Пожалуйста, введите название фильма");
+      alert("Enter movie name");
       return;
     }
     if (movies.includes(newMovie.trim())) {
@@ -47,47 +49,42 @@ function Home() {
     setMovies([...movies, trimmedMovie]);
     setNewMovie("");
   };
+  
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     const trimmedInput = userInput.trim();
     if (!trimmedInput) return;
-    
-    // Добавляем сообщение пользователя
-    const updatedMessages = [...messages, { text: trimmedInput, isBot: false }];
-    
-    // Генерируем более осмысленный ответ (можно заменить на реальный AI)
-    const botResponse = generateBotResponse(trimmedInput);
-    
-    setMessages([...updatedMessages, { text: `MI: ${botResponse}`, isBot: true }]);
-    setUserInput("");
-  };
 
-  // -- TODO: Инкапсулировать в отдельную директорию 
-  const generateBotResponse = (input: string): string => {
-    const lowerInput = input.toLowerCase();
-    
-    if (lowerInput.includes("привет") || lowerInput.includes("hello")) {
-      return "Привет! Рад видеть вас! Какой фильм хотите обсудить?";
+    // 1. Сразу добавляем сообщение пользователя в интерфейс
+    const userMsg = { text: trimmedInput, isBot: false };
+    setMessages((prev) => [...prev, userMsg]);
+    setUserInput("");
+
+    // 2. Добавляем временное пустое сообщение от бота
+    setMessages((prev) => [...prev, { text: "Печатает...", isBot: true }]);
+
+    try {
+      // 3. Дергаем Spring Boot эндпоинт
+
+      const response = await fetch(`http://localhost:8080/api/model/answer?message=${encodeURIComponent(trimmedInput)}`);
+      
+      if (!response.ok) throw new Error("Ошибка связи с сервером");
+      
+      const botText = await response.text(); // Получаем ответ от Spring
+
+      // 4. Заменяем ("Печатает...") на реальный ответ
+      setMessages((prev) => [
+        ...prev.slice(0, -1), 
+        { text: botText, isBot: true }
+      ]);
+
+    } catch (error) {
+      console.error("Ошибка:", error);
+      setMessages((prev) => [
+        ...prev.slice(0, -1), 
+        { text: "AI Agent error!", isBot: true }
+      ]);
     }
-    
-    if (lowerInput.includes("фильм") && movies.length > 0) {
-      const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-      return `Как насчёт "${randomMovie}"? Отличный фильм для обсуждения!`;
-    }
-    
-    if (lowerInput.includes("спасибо") || lowerInput.includes("thanks")) {
-      return "Всегда рад помочь! Есть ещё фильмы для обсуждения?";
-    }
-    
-    // Базовые ответы если не найдено ключевых слов
-    const responses = [
-      "Интересная мысль! Что вы думаете о последних фильмах?",
-      "Давайте поговорим о кино! Какой ваш любимый жанр?",
-      "Отличная тема для обсуждения! Может, добавим ещё фильмов в список?",
-      "Я обожаю обсуждать фильмы! Есть что-то конкретное, что хотели бы обсудить?"
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)];
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
