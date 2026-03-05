@@ -8,9 +8,9 @@ services:
       MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
-      MARIADB_ROOT_PASSWORD: root   # обязательно для инициализации
+      MARIADB_ROOT_PASSWORD: root   
     ports:
-      - "3307:3306"  # порт на хосте, чтобы не конфликтовал с локальной БД
+      - "3307:3306"  
     volumes:
       - db-data:/var/lib/mysql
 

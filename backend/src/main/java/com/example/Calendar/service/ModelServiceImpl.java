@@ -12,13 +12,12 @@ public class ModelServiceImpl implements ModelService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-
-
     @Value("${spring.ai.ollama.chat.options.model}")
     String model;
 
     public String generateAnswer(String promnt){
         String url = "http://localhost:11434/api/generate";
+
 
         Map<String, Object> request = Map.of(
                 "model", model,
