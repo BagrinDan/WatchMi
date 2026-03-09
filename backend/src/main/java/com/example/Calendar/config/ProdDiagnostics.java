@@ -1,10 +1,12 @@
 package com.example.Calendar.config;
 
 
+import org.hibernate.cfg.Environment;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
 
 @Configuration
 @Profile("prod")
@@ -13,4 +15,5 @@ public class ProdDiagnostics {
     public CommandLineRunner run(){
         return args -> System.out.println("[***] Profile: PROD");
     }
+
 }
